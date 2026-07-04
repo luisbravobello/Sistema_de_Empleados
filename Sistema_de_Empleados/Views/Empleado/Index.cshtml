@@ -1,0 +1,42 @@
+﻿@model List<Sistema_de_Empleados.Models.Empleado>
+@{
+    ViewData["Title"] = "Lista de Empleados";
+}
+
+<h1>Lista de Empleados</h1>
+
+@* @Model.Count — cuántos elementos tiene la lista *@
+<p>Total de empleados: <strong>@Model.Count</strong></p>
+
+@* @if — si la lista está vacía muestra un mensaje *@
+@if (Model.Count == 0)
+{
+    <p style="color:red">No hay empleados registrados.</p>
+}
+else
+{
+    <table border="1" cellpadding="8" style="width:100%; border-collapse:collapse">
+        <thead style="background:#002b7f; color:white">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Departamento</th>
+                <th>Salario</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* @foreach — recorre la lista y genera una fila por cada empleado *@
+            @foreach (var emp in Model)
+            {
+                <tr>
+                    <td>@emp.Id</td>
+                    <td>@emp.Nombre</td>
+                    <td>@emp.Departamento</td>
+                    <td>RD$@emp.Salario.ToString("N2")</td>
+                    <td>@(emp.Activo ? " Activo" : " Inactivo")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
