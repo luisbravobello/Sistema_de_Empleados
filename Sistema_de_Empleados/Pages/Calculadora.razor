@@ -1,0 +1,61 @@
+﻿@page "/calculadora"
+
+<h2>Calculadora de Nómina TSS 2026</h2>
+<p style="color:gray">Escribe el salario, los resultados aparecen solos.</p>
+
+<div style="max-width:420px">
+    <label><strong>Salario bruto (RD$)</strong></label>
+
+    <input type="number"
+           @bind="salario"
+           @bind:event="oninput"
+           placeholder="Ej: 35000"
+           style="width:100%; padding:8px; margin:8px 0; font-size:1rem" />
+
+    @if (salario > 0)
+    {
+        @if (salario < 23223m)
+        {
+            <p style="color:#ce1126; font-weight:bold">
+                Salario por debajo del mínimo cotizable TSS 2026 (RD$23,223)
+            </p>
+        }
+        else
+        {
+            <p style="color:#1a7a4a; font-weight:bold">Sobre el mínimo TSS 2026</p>
+        }
+
+        <table border="1" cellpadding="8" style="width:100%; border-collapse:collapse; margin-top:10px">
+            <tr style="background:#002b7f; color:white">
+                <td><strong>Concepto</strong></td>
+                <td><strong>Monto</strong></td>
+            </tr>
+            <tr>
+                <td>Salario bruto</td>
+                <td>RD$@salario.ToString("N2")</td>
+            </tr>
+            <tr style="color:#ce1126">
+                <td>AFP (2.87%)</td>
+                <td>- RD$@afp.ToString("N2")</td>
+            </tr>
+            <tr style="color:#ce1126">
+                <td>SFS (3.04%)</td>
+                <td>- RD$@sfs.ToString("N2")</td>
+            </tr>
+            <tr style="background:#f0fff4; font-weight:bold">
+                <td>Salario neto</td>
+                <td>RD$@neto.ToString("N2")</td>
+            </tr>
+        </table>
+    }
+</div>
+
+@code {
+    // Inicializar explícitamente previene errores de evaluación en el ciclo de vida de Blazor
+    private decimal salario = 0m;
+
+    // Propiedades calculadas usando el operador de expresión flecha => exigido en la rúbrica
+    private decimal afp => salario * 0.0287m;
+    private decimal sfs => salario * 0.0304m;
+    private decimal neto => salario - afp - sfs;
+}

@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <base href="~/" />
     <title>@ViewData["Title"] - Sistema_de_Empleados</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -28,6 +30,9 @@
                         <li class="nav-item"> <a class="nav-link text-dark" asp-controller="Empleado" asp-action="Index">Empleados
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/calculadora">Calculadora</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -47,6 +52,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/_framework/blazor.server.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
