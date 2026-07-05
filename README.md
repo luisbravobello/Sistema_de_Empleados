@@ -1,46 +1,73 @@
-# Sistema de Empleados & Calculadora de Nómina TSS 2026
+# Sistema de Empleados — Razor MVC & Blazor
 
-Este proyecto es una aplicación web híbrida desarrollada en **ASP.NET Core** que combina la arquitectura tradicional **MVC (Model-View-Controller) con Razor** y la interactividad en tiempo real de **Blazor Server**. El sistema fue construido como parte de las asignaciones prácticas del laboratorio de desarrollo de software en la **Universidad Central del Este (UCE)**.
+Proyecto de laboratorio para la asignatura **ISW-311 Tecnologías de Internet I** — Universidad Central del Este.
 
-## 🚀 Características del Proyecto
+Aplicación ASP.NET Core (.NET 8) que combina **Razor MVC** y **Blazor Server** en un mismo proyecto:
 
-### Parte 1: Gestión de Empleados (Razor MVC)
-* **Modelado Fuertemente Tipado:** Implementación de la clase `Empleado` en la capa de modelos (`Models/`).
-* **Controlador Dedicado:** Uso de un controlador (`EmpleadoController`) con una lista de datos predefinida (*hardcodeada*) para simular el almacenamiento de registros.
-* **Vistas Dinámicas con Razor:** * Uso de bucles `@foreach` para la generación dinámica de filas en tablas HTML.
-  * Condicionales `@if` para manejar escenarios de listas vacías.
-  * Conteo exacto mediante `@Model.Count`.
+- **Parte 1 — Razor MVC:** listado de empleados en una tabla HTML, con datos hardcodeados (sin base de datos).
+- **Parte 2 — Blazor:** calculadora de nómina que calcula en tiempo real el descuento de TSS (AFP y SFS) mientras el usuario escribe, sin recargar la página.
 
-### Parte 2: Calculadora de Nómina TSS 2026 (Blazor Server)
-* **Componentes Interactivos:** Archivo `Calculadora.razor` integrado directamente en el pipeline de vistas de la aplicación.
-* **Interactividad sin Recargas (SPA):** Uso de la directiva `@bind:event="oninput"` para capturar las pulsaciones del teclado y actualizar la interfaz al instante mediante WebSockets (SignalR).
-* **Propiedades Calculadas:** Deducciones calculadas automáticamente utilizando miembros con cuerpo de expresión (`=>`) en C#.
-* **Regulaciones TSS Dominicana:**
-  * Alerta dinámica si el salario bruto está por debajo del mínimo cotizable estipulado para el 2026 (**RD$ 23,223.00**).
-  * Deducción automatizada de **AFP (2.87%)**.
-  * Deducción automatizada de **SFS (3.04%)**.
+## Tecnologías
 
----
+- ASP.NET Core 8.0 (MVC)
+- Blazor Server
+- C#, Razor Pages / Razor Views
+- Bootstrap 5
 
-## 🛠️ Tecnologías y Herramientas Utilizadas
+## Estructura del proyecto
 
-* **Framework:** .NET 6.0 / .NET 8.0 (ASP.NET Core)
-* **Lenguajes:** C#, HTML5, CSS3
-* **Librerías de Estilos:** Bootstrap 5
-* **Entorno de Desarrollo:** Visual Studio Community
+```
+Sistema_de_Empleados/
+├── Controllers/
+│   └── EmpleadoController.cs      # Lista hardcodeada de empleados
+├── Models/
+│   └── Empleado.cs                 # Modelo de datos del empleado
+├── Views/
+│   ├── Empleado/Index.cshtml       # Tabla de empleados (Razor)
+│   └── Shared/_Layout.cshtml       # Layout general + navbar
+├── Pages/
+│   ├── _Host.cshtml                # Punto de entrada de Blazor
+│   ├── App.razor                   # Enrutador de Blazor
+│   └── Calculadora.razor           # Calculadora de nómina (Blazor)
+└── Program.cs                      # Configuración de servicios y rutas
+```
 
----
+## Funcionalidades
 
-## 📋 Requisitos para la Ejecución
+### Parte 1 — Lista de Empleados (`/Empleado`)
+- Modelo `Empleado` con Id, Nombre, Departamento, Salario y Estado (Activo/Inactivo).
+- Tabla generada con `@foreach` a partir de una lista hardcodeada en el Controller.
+- Mensaje condicional (`@if`) si la lista está vacía.
+- Contador total de empleados con `@Model.Count`.
 
-Antes de clonar y ejecutar el proyecto, asegúrate de tener instalado:
-* [.NET SDK](https://dotnet.microsoft.com/download) (Versión compatible con tu instalación global).
-* [Visual Studio](https://visualstudio.microsoft.com/) con la carga de trabajo **Desarrollo de ASP.NET y web** activa.
+### Parte 2 — Calculadora de Nómina (`/calculadora`)
+- Cálculo en tiempo real de:
+  - **AFP** (2.87%)
+  - **SFS** (3.04%)
+  - **Salario neto**
+- Actualización instantánea con `@bind:event="oninput"` (sin botones ni recargas).
+- Aviso visual si el salario está por debajo del mínimo cotizable TSS 2026 (RD$23,223).
 
----
+## Cómo ejecutar el proyecto
 
-## 🔧 Configuración e Instalación
+1. Clona el repositorio:
+   ```
+   git clone https://github.com/luisbravobello/Sistema_de_Empleados.git
+   ```
+2. Ábrelo con Visual Studio 2022 (o superior), usando el archivo `.sln`/`.slnx`.
+3. Presiona **F5** (o `Ctrl+F5`) para compilar y ejecutar.
+4. Navega a:
+   - `/Empleado` — para ver la tabla de empleados.
+   - `/calculadora` — para probar la calculadora de nómina.
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone [https://github.com/luisbravobello/Sistema_de_Empleados.git](https://github.com/luisbravobello/Sistema_de_Empleados.git)
+## Tabla de verificación — TSS 2026
+
+| Salario bruto | AFP (2.87%) | SFS (3.04%) | Neto |
+|---|---|---|---|
+| RD$23,223.00 | RD$666.50 | RD$706.38 | RD$21,850.12 |
+| RD$35,000.00 | RD$1,004.50 | RD$1,064.00 | RD$32,931.50 |
+| RD$42,000.00 | RD$1,205.40 | RD$1,276.80 | RD$39,517.80 |
+
+## Autor
+
+Luis Bravo Bello — ISW-311, Universidad Central del Este, San Pedro de Macorís, RD.
