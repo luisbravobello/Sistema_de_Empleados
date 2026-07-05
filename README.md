@@ -1,4 +1,4 @@
-# Sistema de Empleados — Razor MVC & Blazor
+# Sistema de Empleados  Razor MVC & Blazor
 
 Proyecto de laboratorio para la asignatura **ISW-311 Tecnologías de Internet I** — Universidad Central del Este.
 
@@ -28,25 +28,28 @@ Sistema_de_Empleados/
 ├── Pages/
 │   ├── _Host.cshtml                # Punto de entrada de Blazor
 │   ├── App.razor                   # Enrutador de Blazor
+│   ├── _Imports.razor              # Usings compartidos por los componentes Blazor
 │   └── Calculadora.razor           # Calculadora de nómina (Blazor)
 └── Program.cs                      # Configuración de servicios y rutas
 ```
 
 ## Funcionalidades
 
-### Parte 1 — Lista de Empleados (`/Empleado`)
+### Parte 1  Lista de Empleados (`/Empleado`)
 - Modelo `Empleado` con Id, Nombre, Departamento, Salario y Estado (Activo/Inactivo).
 - Tabla generada con `@foreach` a partir de una lista hardcodeada en el Controller.
 - Mensaje condicional (`@if`) si la lista está vacía.
 - Contador total de empleados con `@Model.Count`.
 
-### Parte 2 — Calculadora de Nómina (`/calculadora`)
+### Parte 2  Calculadora de Nómina (`/calculadora`)
 - Cálculo en tiempo real de:
   - **AFP** (2.87%)
   - **SFS** (3.04%)
   - **Salario neto**
 - Actualización instantánea con `@bind:event="oninput"` (sin botones ni recargas).
 - Aviso visual si el salario está por debajo del mínimo cotizable TSS 2026 (RD$23,223).
+
+> **Nota técnica:** fue necesario agregar `Pages/_Imports.razor` con los `@using` de Blazor (`Microsoft.AspNetCore.Components.Routing`, etc.), ya que a diferencia de una plantilla Blazor completa, el proyecto MVC no lo genera automáticamente. Sin este archivo, `App.razor` no reconoce las etiquetas `Router`, `Found`, `RouteView` y `NotFound`.
 
 ## Cómo ejecutar el proyecto
 
@@ -60,7 +63,7 @@ Sistema_de_Empleados/
    - `/Empleado` — para ver la tabla de empleados.
    - `/calculadora` — para probar la calculadora de nómina.
 
-## Tabla de verificación — TSS 2026
+## Tabla de verificación TSS 2026
 
 | Salario bruto | AFP (2.87%) | SFS (3.04%) | Neto |
 |---|---|---|---|
